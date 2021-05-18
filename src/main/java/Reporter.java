@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Reporter {
-    private Crawler crawler;
+    private final Crawler crawler;
 
     public Reporter(Crawler crawler) {
         this.crawler = crawler;

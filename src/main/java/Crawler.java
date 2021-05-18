@@ -10,8 +10,8 @@ public class Crawler {
     private final int MAX_DEPTH;
     private final int MAX_VISITED_PAGES;
     private final String seed;
-    private HashSet<String> visitedLinks;
-    private HashMap<Link, Integer> links;
+    private final HashSet<String> visitedLinks;
+    private final HashMap<Link, Integer> links;
     public static ArrayList<String> terms;
 
     public Crawler(String seed, ArrayList<String> termsList, int maxDepth, int maxVisitedPages) {
@@ -31,12 +31,12 @@ public class Crawler {
     public void crawlPage() {
         String url = seed;
         Queue<Link> queue = new ArrayDeque<>();
-        if (visitedLinks.contains(url)) {
-            return;
-        }
         queue.add(new Link(url, 0));
         while (!queue.isEmpty()) {
             Link current = queue.poll();
+            if (visitedLinks.contains(current.getUrl())) {
+                return;
+            }
             if (current.getDepth() <= MAX_DEPTH && visitedLinks.size() < MAX_VISITED_PAGES) {
                 visitedLinks.add(current.getUrl());
                 try {

@@ -8,7 +8,7 @@ public class Main {
         terms.add("Mask");
         terms.add("Gigafactory");
         terms.add("Elon Musk");
-        Crawler crawler = new Crawler( "https://en.wikipedia.org/wiki/Elon_Musk",terms,8,10);
+        Crawler crawler = new Crawler( "https://en.wikipedia.org/wiki/Elon_Musk",terms,8,100);
         crawler.crawlPage();
         Reporter reporter = new Reporter(crawler);
         try {
