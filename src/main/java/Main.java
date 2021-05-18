@@ -6,7 +6,9 @@ public class Main {
         ArrayList<String> terms = new ArrayList<>();
         terms.add("Tesla");
         terms.add("Mask");
-        Crawler crawler = new Crawler( "https://en.wikipedia.org/wiki/Elon_Musk",terms);
+        terms.add("Gigafactory");
+        terms.add("Elon Musk");
+        Crawler crawler = new Crawler( "https://en.wikipedia.org/wiki/Elon_Musk",terms,8,10);
         crawler.crawlPage();
         Reporter reporter = new Reporter(crawler);
         try {

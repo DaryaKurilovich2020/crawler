@@ -1,4 +1,3 @@
-import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -8,27 +7,29 @@ import java.io.IOException;
 import java.util.*;
 
 public class Crawler {
-    private static final int MAX_DEPTH = 8;
-    private static final int MAX_VISITED_PAGES = 100;
+    private final int MAX_DEPTH;
+    private final int MAX_VISITED_PAGES;
     private final String seed;
     private HashSet<String> visitedLinks;
     private HashMap<Link, Integer> links;
     public static ArrayList<String> terms;
 
-    public Crawler(String seed, ArrayList<String> termsList) {
+    public Crawler(String seed, ArrayList<String> termsList, int maxDepth, int maxVisitedPages) {
         visitedLinks = new HashSet<>();
         links = new HashMap<>();
         terms = termsList;
+        MAX_DEPTH = maxDepth;
+        MAX_VISITED_PAGES = maxVisitedPages;
         this.seed = seed;
     }
 
-    public void checkPageForTerms(String url, String content, ArrayList<String> terms) {
+    public void checkPageForTerms(String url, String content) {
         Link link = new Link(url, content);
         links.put(link, link.getTotalHits());
     }
 
     public void crawlPage() {
-        String url=seed;
+        String url = seed;
         Queue<Link> queue = new ArrayDeque<>();
         if (visitedLinks.contains(url)) {
             return;
@@ -41,7 +42,7 @@ public class Crawler {
                 try {
                     Document document = Jsoup.connect(current.getUrl()).ignoreHttpErrors(true).get();
                     String content = document.body().text();
-                    checkPageForTerms(current.getUrl(), content, terms);
+                    checkPageForTerms(current.getUrl(), content);
                     Elements linksOnPage = document.select("a[href]");
                     int depth = current.getDepth() + 1;
                     if (depth < MAX_DEPTH) {
@@ -63,5 +64,4 @@ public class Crawler {
     public ArrayList<String> getTerms() {
         return terms;
     }
-
 }

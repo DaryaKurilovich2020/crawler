@@ -22,7 +22,7 @@ public class Reporter {
             csvWriter.append(link.getUrl());
             for (String term : crawler.getTerms()) {
                 csvWriter.append(",");
-                csvWriter.append(link.getHitByTerm(term).toString());
+                csvWriter.append(Integer.valueOf(link.getHitByTerm(term)).toString());
             }
             csvWriter.append("\n");
         }
@@ -53,10 +53,10 @@ public class Reporter {
             csvWriter.append(link.getUrl());
             for (String term : crawler.getTerms()) {
                 csvWriter.append(",");
-                csvWriter.append(link.getHitByTerm(term).toString());
+                csvWriter.append(Integer.valueOf(link.getHitByTerm(term)).toString());
             }
             csvWriter.append(",");
-            csvWriter.append(link.getTotalHits() + "");
+            csvWriter.append(String.valueOf(link.getTotalHits()));
             if (i != 9) {
                 csvWriter.append("\n");
             }

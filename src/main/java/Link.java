@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,8 +42,10 @@ public class Link {
             String term = termsToSearch.get(i);
             Pattern p = Pattern.compile(term);
             Matcher m = p.matcher(content);
-
-            while (m.find()) {
+            String termLowerCase = term.toLowerCase();
+            Pattern p2=Pattern.compile(termLowerCase);
+            Matcher m2=p2.matcher(content);
+            while (m.find()|| m2.find()) {
                 counter++;
             }
             terms.put(term, counter);
@@ -60,7 +63,10 @@ public class Link {
         return totalHits;
     }
 
-    public Integer getHitByTerm(String term) {
+    public int getHitByTerm(String term) {
+        if (terms == null) {
+            findTerms();
+        }
         return terms.get(term);
     }
 }
